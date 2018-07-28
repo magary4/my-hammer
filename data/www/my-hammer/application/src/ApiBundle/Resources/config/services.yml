@@ -1,0 +1,22 @@
+services:
+    ApiBundle\EventListener\WebApiResponseListener:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: 'kernel.event_listener', event: 'api.response', method: 'onApiResponse' }
+
+
+    ApiBundle\EventListener\NoRouteFoundListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+
+    ApiBundle\Fixtures\CategoryFixtures:
+        tags: [doctrine.fixture.orm]
+
+
+    ApiBundle\Service\ApiManager:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@form.factory'
+            - '@validator'

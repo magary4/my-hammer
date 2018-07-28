@@ -1,0 +1,5 @@
+api:
+    resource: "@ApiBundle/Controller/ClaimController.php"
+    type: annotation
+    prefix:   /api/v1
+
