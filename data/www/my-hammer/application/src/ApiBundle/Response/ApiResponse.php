@@ -1,34 +1,59 @@
 <?php
+declare( strict_types=1 );
 
 namespace ApiBundle\Response;
 
+use ContainerSypt7fh\appDevDebugProjectContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiResponse implements ApiResponseInterface, \JsonSerializable
 {
+    /**
+     * @var string
+     */
+    private $format = 'json';
 
-   private $format = 'json';
+    /**
+     * @var int
+     */
+    private $status = 200;
 
-   private $status = 200;
+    /**
+     * @var int
+     */
+    private $code;
 
-   private $code = 200;
+    /**
+     * @var string
+     */
+    private $message = "";
 
-   private $message = "";
+    /**
+     * @var array
+     */
+    private $errors = [];
 
-   private $errors = [];
+    /**
+     * @var array
+     */
+    private $data = [];
 
-   private $data = [];
-
-   public function __construct( $code=1003, $message = "")
-   {
-       $this->code = $code;
-       $this->message = $message;
-   }
+    /**
+     * ApiResponse constructor.
+     * @param int $code
+     * @param string $message
+     */
+    public function __construct( $code = ApiResponseCode::SUCCESS, $message = "" )
+    {
+        $this->code    = $code;
+        $this->message = $message;
+    }
 
     /**
      * @return mixed
      */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
@@ -36,7 +61,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param mixed $code
      */
-    public function setCode( $code )
+    public function setCode( int $code ): void
     {
         $this->code = $code;
     }
@@ -44,7 +69,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @return mixed
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -52,7 +77,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param mixed $status
      */
-    public function setStatus( $status )
+    public function setStatus( int $status ): void
     {
         $this->status = $status;
     }
@@ -60,7 +85,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @return mixed
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -68,7 +93,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param mixed $message
      */
-    public function setMessage( $message )
+    public function setMessage( string $message ): void
     {
         $this->message = $message;
     }
@@ -84,7 +109,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param array $errors
      */
-    public function setErrors( $errors )
+    public function setErrors( $errors ): void
     {
         $this->errors = $errors;
     }
@@ -92,7 +117,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -100,7 +125,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param array $data
      */
-    public function setData( $data )
+    public function setData( array $data ): void
     {
         $this->data = $data;
     }
@@ -108,7 +133,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @return string
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
@@ -116,7 +141,7 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
     /**
      * @param string $format
      */
-    public function setFormat( $format )
+    public function setFormat( string $format ): void
     {
         $this->format = $format;
     }
@@ -128,29 +153,30 @@ class ApiResponse implements ApiResponseInterface, \JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $responseArray = [
-            "code" => $this->getCode(),
+            "code"    => $this->getCode(),
             "message" => $this->getMessage()
         ];
 
-        if($this->getErrors()){
+        if ( $this->getErrors() ) {
             $responseArray["errors"] = $this->getErrors();
         }
 
-        if($this->getData()){
+        if ( $this->getData() ) {
             $responseArray["data"] = $this->getData();
         }
 
         return $responseArray;
     }
 
-    public function getResponse()
+    public function getResponse(): Response
     {
-        if($this->getFormat()==="json") {
-            return new JsonResponse($this,$this->getStatus());
+        if ( $this->getFormat() === "json" ) {
+            return new JsonResponse( $this, $this->getStatus() );
         } else {
+            throw new \Exception( sprintf( "%s format is not supported yet", $this->getFormat() ) );
             // TODO: implement other data-formats
         }
     }

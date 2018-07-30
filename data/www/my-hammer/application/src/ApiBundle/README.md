@@ -1,9 +1,17 @@
-## API endpoint
+### Load Database
+
+```
+ php bin/console doctrine:database:create
+ php bin/console doctrine:schema:update --force
+ php bin/console doctrine:fixtures:load 
+```
+
+### API endpoint
 
 |  |  |
 | ------ | ------ |
 | Description | Add new claim
-| URL | /api/v1/create
+| URL | /api/v1/claim/create
 | Methods | POST
 | Request Body | JSON application/json 
 | Success Response | { "code" : 1003, "message" : "Claim added successfully", "data" : { "id" : 19 } }

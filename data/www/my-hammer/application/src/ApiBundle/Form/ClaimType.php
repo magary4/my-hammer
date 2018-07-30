@@ -22,9 +22,10 @@ class ClaimType extends AbstractType
 
         $builder->get( "due_date" )->addModelTransformer( new CallbackTransformer( function ( $date ) {
             return $date;
-        }, function ( $date ){
-            return new \DateTime($date);
-        } ));
+        }, function ( $date ) {
+            $dateTime = new \DateTime( $date );
+            return $dateTime > new \DateTime('today midnight') ? $dateTime : null;
+        } ) );
     }
 
     public function configureOptions( OptionsResolver $resolver )

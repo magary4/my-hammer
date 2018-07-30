@@ -40,7 +40,7 @@ class Claim
      * @var int
      *
      * @ORM\Column(name="zip", type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Must be in 5-digits format")
      * @Assert\Length(min="5", max="5")
      */
     private $zip;
@@ -81,7 +81,7 @@ class Claim
      * @var string
      *
      * @ORM\Column(name="due_date", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please provide date in future. Format: YYYY-MM-DD")
      * @Assert\GreaterThan("today")
      *
      */

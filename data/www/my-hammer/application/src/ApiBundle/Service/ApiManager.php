@@ -1,4 +1,5 @@
 <?php
+declare( strict_types=1 );
 
 namespace ApiBundle\Service;
 
@@ -14,12 +15,27 @@ class ApiManager
 {
     // TODO: make class independent from Entity-type. Improve to process input to different Entities
 
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
 
+    /**
+     * @var FormFactoryInterface
+     */
     private $formFactory;
 
+    /**
+     * @var ValidatorInterface
+     */
     private $validator;
 
+    /**
+     * ApiManager constructor.
+     * @param EntityManager $entityManager
+     * @param FormFactoryInterface $formFactory
+     * @param ValidatorInterface $validator
+     */
     public function __construct(
         EntityManager $entityManager,
         FormFactoryInterface $formFactory,
@@ -30,7 +46,12 @@ class ApiManager
         $this->validator     = $validator;
     }
 
-    public function proccessInput( array $data )
+    /**
+     * Handle input array to save it in DB
+     * @param array $data
+     * @return ApiResponse
+     */
+    public function proccessInput( $data ): ApiResponse
     {
         $apiResponse = new ApiResponse();
 

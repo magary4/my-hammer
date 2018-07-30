@@ -5,7 +5,7 @@ namespace ApiBundle\Controller;
 use ApiBundle\Event\ApiResponseEvent;
 use ApiBundle\Service\ApiManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

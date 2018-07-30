@@ -20,3 +20,4 @@ services:
             - '@doctrine.orm.default_entity_manager'
             - '@form.factory'
             - '@validator'
+        public: true

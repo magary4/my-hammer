@@ -19,7 +19,8 @@
 /data/mongo/*
 /data/mysql/*
 /data/pqsql/*
-#/data/www/*
+/data/www/my-hammer/application/vendor/*
+/data/www/my-hammer/application/var/*
 /backups/*
 
 # Ignore Certificate Authority

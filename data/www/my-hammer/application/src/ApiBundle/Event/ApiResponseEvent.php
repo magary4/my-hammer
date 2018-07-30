@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ApiBundle\Event;
 
@@ -6,6 +7,7 @@ use ApiBundle\Response\ApiResponse;
 use ApiBundle\Response\ApiResponseInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiResponseEvent extends Event
 {
@@ -18,7 +20,7 @@ class ApiResponseEvent extends Event
         $this->apiResponse = $apiResponse;
     }
 
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->apiResponse->getResponse();
     }
@@ -26,7 +28,7 @@ class ApiResponseEvent extends Event
     /**
      * @return ApiResponse
      */
-    public function getApiResponse()
+    public function getApiResponse(): ApiResponseInterface
     {
         return $this->apiResponse;
     }
@@ -34,7 +36,7 @@ class ApiResponseEvent extends Event
     /**
      * @param ApiResponse $apiResponse
      */
-    public function setApiResponse( $apiResponse )
+    public function setApiResponse( ApiResponseInterface $apiResponse ): void
     {
         $this->apiResponse = $apiResponse;
     }

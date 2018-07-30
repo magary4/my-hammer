@@ -27,26 +27,26 @@ class WebApiResponseListener implements ApiListenerInterface
      */
     public function onApiResponse( ApiResponseEvent $event )
     {
-        if($this->isWebRequest()) {
+        if ( $this->isWebRequest() ) {
             $apiResponse = $event->getApiResponse();
-            if($apiResponse->getErrors()) {
+            if ( $apiResponse->getErrors() ) {
                 $errorsNormalized = [];
                 foreach ( $apiResponse->getErrors() as $error ) {
                     $errorsNormalized[$error->getPropertyPath()] = $error->getMessage();
                 }
-                $apiResponse->setFormat($this->getFormat());
+                $apiResponse->setFormat( $this->getFormat() );
                 $apiResponse->setErrors( $errorsNormalized );
             }
         }
     }
 
-    private function isWebRequest()
+    private function isWebRequest(): bool
     {
         // TODO: Analize headers and detect that request come from web and not from iOS, Android etc
         return true;
     }
 
-    public function getFormat()
+    public function getFormat(): string
     {
         // TODO: Analize headers and detect that requested data-format
         return "json";
