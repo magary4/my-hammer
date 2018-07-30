@@ -28,3 +28,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;"category":"802030" <br/>
 } 
     
+#### How to override Api-response format regarding OS-platform or another needles    
+
+services.yml
+
+    ApiBundle\EventListener\MyCustomResponseListener:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: 'kernel.event_listener', event: 'api.response', method: 'onApiResponse' }

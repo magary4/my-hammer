@@ -3,7 +3,6 @@ declare( strict_types=1 );
 
 namespace ApiBundle\Response;
 
-use ContainerSypt7fh\appDevDebugProjectContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
